@@ -47,3 +47,7 @@ if let value = optionalValue {
 }
 // ??を使う場合(Optional Bindingより簡潔)
 result = optionalValue ?? 0
+
+// 強制アンラップ(nilに対して強制アンラップをするとexceptionを吐くので非推奨)
+optionalValue = nil
+// let value = optionalValue! // error:queue = 'com.apple.main-thread', stop reason = EXC_BREAKPOINT (code=1, subcode=0x195713658)
