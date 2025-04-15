@@ -28,3 +28,11 @@ if let optionalValue {
 } else {
     print("Couldn't bind an optional value")
 }
+
+// 値を取り出さずに値を参照したい場合
+let optionalImagePath: String? = "logo.png"
+if optionalImagePath?.hasSuffix(".png") == true {
+    print("The image is PNG format")
+    // Optional Chainingの結果はOptional型になる
+    print(optionalImagePath?.hasSuffix(".png")) // "Optional(true)\n"
+}
