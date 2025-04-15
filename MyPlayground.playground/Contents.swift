@@ -36,3 +36,14 @@ if optionalImagePath?.hasSuffix(".png") == true {
     // Optional Chainingの結果はOptional型になる
     print(optionalImagePath?.hasSuffix(".png")) // "Optional(true)\n"
 }
+
+// Optional方の変数がnilならデフォルト値を返したい場合、??を使う
+// OptionalBindingの場合
+var result: Int
+if let value = optionalValue {
+    result = value
+} else {
+    result = 0
+}
+// ??を使う場合(Optional Bindingより簡潔)
+result = optionalValue ?? 0
