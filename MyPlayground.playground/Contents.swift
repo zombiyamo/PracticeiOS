@@ -151,3 +151,38 @@ case .north:
     print("Lots of planets have a north")
 default: break // caseが追加されたときにエラーが出ないので非推奨
 }
+
+// structとclass
+// 推奨
+struct SomeStructure {
+    // structure definition goes here
+}
+// 保持データの同一性担保が必要な場合、またはObjective-Cとの互換性が必要な場合に使用
+class SomeClass {
+    // class definition goes here
+}
+
+// 上記のStateをstructを使って表現する場合
+// 推奨
+struct AnotherState {
+    var state: State
+    
+    enum State {
+        case success
+        case failure(Error)
+    }
+}
+AnotherState(state: .success)
+
+// 非推奨
+struct AnotherState2 {
+    var state: State
+    var error: Error?
+    
+    enum State {
+        case success
+        case failure
+    }
+}
+// stateがsuccessなのにerrorが非nilという本来表現できない状態を表現できてしまうため非推奨
+AnotherState2(state: .success, error: DummyError())
