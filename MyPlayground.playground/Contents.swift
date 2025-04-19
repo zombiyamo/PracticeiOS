@@ -218,3 +218,66 @@ print(a2.value) // b2の変更の影響を受ける
 // a2: 2
 print(b2.value)
 // b2: 2
+
+// ARC (Automatic Reference Counting) Swiftのメモリ管理　参照カウントが0にならない限りメモリ解放しない
+class Person {
+    let name: String
+//    var apartment: Apartment?
+    weak var apartment: Apartment? //弱参照 参照カウントに加算されない
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    deinit {
+        print("\(name) is being deinitialized")
+    }
+}
+
+class Apartment {
+    let person: Person
+    
+    init(person: Person) {
+        self.person = person
+        person.apartment = self
+    }
+    
+    deinit {
+        print("Apartment is being deinitialized")
+    }
+}
+
+var person: Person? = Person(name: "Tom")
+// Personの参照カウント1
+var apartment: Apartment? = Apartment(person: person!)
+// Apartmentの参照カウント1
+// Personの参照カウント2
+
+person = nil
+// Personの参照カウント1
+apartment = nil
+// Apartmentの参照カウント0
+// Prints "Apartment is being deinitialized"
+// Personの参照カウント0
+// Prints "Person Tom is being deinitialized"
+
+
+// PersonのpropertyにApartmentを持たせた場合
+//var person: Person? = Person(name: "Tom")
+// Personの参照カウント1
+//var apartment: Apartment? = Apartment(person: person!)
+// Apartmentの参照カウント2
+// Personの参照カウント2
+
+//person = nil
+// Personの参照カウント1
+//apartment = nil
+// Apartmentの参照カウント1
+// 循環参照になってしまうため永遠にメモリ解放されない
+
+// 弱参照を使用した場合
+// 参照カウントに加算されないため循環参照にならない
+
+// じゃあ全部weakで良くない？
+//strong（デフォルト）    所有してる＝確実に生きてる、安心して使える 非Optional
+//weak    所有しない＝解放されてもいい、循環参照を防ぐための措置　Optional
