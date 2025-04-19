@@ -84,3 +84,50 @@ decorate(100)
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 // トレイリングクロージャで丸括弧省略
 names.sorted { $0 < $1 }
+
+// 式 評価されると値になる
+let number: Double = if Bool.random() { 2.718 } else { 3.14 }
+let state: State = .failure(DummyError())
+let word: String = switch state {
+case .success: "guitar"
+case .failure: "piano"
+}
+
+// Associated Values
+enum State {
+    case success
+    case failure(Error)
+}
+
+struct DummyError: Error {}
+switch state {
+case .success:
+    print("Success!")
+case .failure(let error):
+    print("Error: \(error)")
+}
+
+// 文 評価されても値にならない
+let number2: Double
+if Bool.random() {
+    number2 = 2.718
+} else {
+    number2 = 3.14
+}
+let word2: String
+switch state {
+case .success:
+    word2 = "guitar"
+case .failure:
+    word2 = "piano"
+}
+
+// enum
+enum CompassPoint {
+    case north
+    case south
+    case east
+    case west
+}
+var point = CompassPoint.north
+point = .south // 型名省略可
