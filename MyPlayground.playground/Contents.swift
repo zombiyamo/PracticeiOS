@@ -75,3 +75,12 @@ func move(from home: String, to office: String) {
 }
 
 move(from: "Chiba", to: "Tokyo")
+
+// クロージャ(多言語の無名関数と同義)
+var decorate: (Int) -> String = { number in "[[\(number)]]"}
+decorate(100)
+
+// sortedはクロージャを受け取ることができる
+let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+// トレイリングクロージャで丸括弧省略
+names.sorted { $0 < $1 }
