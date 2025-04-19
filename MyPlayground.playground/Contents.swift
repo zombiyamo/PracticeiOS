@@ -68,3 +68,10 @@ func greet(person: String) -> String {
 //}
 
 print(greet(person: "Alice"))
+
+// 引数ラベル
+func move(from home: String, to office: String) {
+    print( "Moving from \(home) to \(office)." )
+}
+
+move(from: "Chiba", to: "Tokyo")
