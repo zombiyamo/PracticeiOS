@@ -329,3 +329,22 @@ extension Coffee: Drink {
 
 let coffee = Coffee(price: 3.0)
 coffee.serve()
+
+// Generics
+enum Stateful<Value> {
+    case idle
+    case loading
+    case failed(Error)
+    case loaded(Value)
+}
+
+var data: Stateful<[String]> = .idle
+// データ取得中
+data = .loading
+// データ取得失敗
+data = .failed(DummyError())
+// データ取得完了
+data = .loaded(["a", "b", "c"])
+
+// 他の型でも利用可能
+var anotherData: Stateful<[Int]> = .loaded([1, 2, 3])
