@@ -186,3 +186,35 @@ struct AnotherState2 {
 }
 // stateがsuccessなのにerrorが非nilという本来表現できない状態を表現できてしまうため非推奨
 AnotherState2(state: .success, error: DummyError())
+
+// structで定義した方は値型
+struct S {
+    var value: Int
+}
+
+var a = S(value: 1)
+var b = a // 値型のインスタンスを別の変数に格納すると、それぞれメモリ上は別管理となる
+
+b.value = 2
+print(a.value) // メモリ上はbと別管理のため、bの変更は影響しない
+// a: 1
+print(b.value)
+// b: 2
+
+// classで定義した型は参照型
+class C {
+    var value: Int
+    
+    init(value: Int) {
+        self.value = value
+    }
+}
+
+var a2 = C(value: 1)
+var b2 = a2 // 参照型なのでメモリ上の同じ場所を指し示す
+
+b2.value = 2
+print(a2.value) // b2の変更の影響を受ける
+// a2: 2
+print(b2.value)
+// b2: 2
