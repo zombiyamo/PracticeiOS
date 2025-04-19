@@ -1,5 +1,9 @@
 import UIKit
 
+// mixigroup/2025BeginnerTrainingiOS at session-0 Swiftの基本
+// https://github.com/mixigroup/2025BeginnerTrainingiOS/tree/session-0?tab=readme-ov-file
+
+
 // 変数var定数let
 var mutable = "Apple"
 mutable = "Lemon"
