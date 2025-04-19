@@ -281,3 +281,51 @@ apartment = nil
 // じゃあ全部weakで良くない？
 //strong（デフォルト）    所有してる＝確実に生きてる、安心して使える 非Optional
 //weak    所有しない＝解放されてもいい、循環参照を防ぐための措置　Optional
+
+// Protocols AndroidでいうInterface
+protocol Drink {
+    // 定価
+    var price: Double { get }
+    func serve()
+}
+
+// extensionはプロトコル拡張 別で実装しなければここのがデフォルトで使われる
+extension Drink {
+    func serve() {
+        print("Serving a drink: $ \(price)")
+    }
+}
+
+struct Soda: Drink {
+    let price: Double
+}
+
+let soda = Soda(price: 2.5)
+soda.serve()
+// Serving a drink: $ 2.5
+
+protocol Discountable {
+    var discountPrice: Double { get }
+}
+
+struct Coffee {
+    let price: Double
+}
+
+// CoffeeにDiscountableを適用し、割引対応を追加
+extension Coffee: Discountable {
+    // $1 discount
+    var discountPrice: Double { 1.0 }
+}
+
+// デフォルト実装を上書きすることも可能
+extension Coffee: Drink {
+    func serve() {
+        print(
+            "Serving a coffee: $\(price - discountPrice), $\(discountPrice) off"
+        )
+    }
+}
+
+let coffee = Coffee(price: 3.0)
+coffee.serve()
