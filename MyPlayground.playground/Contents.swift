@@ -55,3 +55,14 @@ result = optionalValue ?? 0
 // 強制アンラップ(nilに対して強制アンラップをするとexceptionを吐くので非推奨)
 optionalValue = nil
 // let value = optionalValue! // error:queue = 'com.apple.main-thread', stop reason = EXC_BREAKPOINT (code=1, subcode=0x195713658)
+
+// 関数
+// 1行のみの場合はreturnを省略できる
+func greet(person: String) -> String {
+    "Hello, \(person)!"
+}
+// 以下と同義
+//func greet(person: String) -> String {
+//    let greeting = "Hello, " + person + "!"
+//    return greeting
+//}
