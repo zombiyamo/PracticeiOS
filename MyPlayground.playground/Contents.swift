@@ -131,3 +131,23 @@ enum CompassPoint {
 }
 var point = CompassPoint.north
 point = .south // 型名省略可
+
+let directionToHead: CompassPoint = .south
+// 推奨される書き方
+switch directionToHead {
+case .north:
+    print("Lots of planets have a north")
+case .south:
+    print("Watch out for penguins")
+case .east:
+    print("Where the sun rises")
+case .west:
+    print("Where the skies are blue")
+}
+
+// default指定可能
+switch directionToHead {
+case .north:
+    print("Lots of planets have a north")
+default: break // caseが追加されたときにエラーが出ないので非推奨
+}
