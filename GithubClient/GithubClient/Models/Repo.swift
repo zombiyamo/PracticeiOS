@@ -8,6 +8,6 @@
 import Foundation
 
 struct Repo {
-    var name: String
-    var owner: User
+  var name: String
+  var owner: User
 }
