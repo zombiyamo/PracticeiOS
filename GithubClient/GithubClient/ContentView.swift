@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    private let mockRepos = [
+        Repo(name: "Test Repo1", owner: User(name: "Test User1")),
+        Repo(name: "Test Repo2", owner: User(name: "Test User2")),
+        Repo(name: "Test Repo3", owner: User(name: "Test User3")),
+        Repo(name: "Test Repo4", owner: User(name: "Test User4")),
+        Repo(name: "Test Repo5", owner: User(name: "Test User5")),
+    ]
+    
+    
     var body: some View {
-        VStack {
+        List(0 ..< 5) { item in
             HStack {
                 Image(.githubMark)
                     .resizable()
