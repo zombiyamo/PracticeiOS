@@ -17,8 +17,16 @@ struct RepoListView: View {
   ]
 
   var body: some View {
-    List(mockRepos) { repo in
-      RepoRow(repo: repo)
+    NavigationStack {
+      List(mockRepos) { repo in
+        NavigationLink(value: repo) {
+          RepoRow(repo: repo)
+        }
+      }
+      .navigationTitle("Repositories")
+      .navigationDestination(for: Repo.self) { repo in
+        RepoDetailView(repo: repo)
+      }
     }
   }
 }

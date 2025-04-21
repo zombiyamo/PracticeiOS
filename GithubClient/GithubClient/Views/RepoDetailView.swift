@@ -14,7 +14,7 @@ struct RepoDetailView: View {
   private var imageHeight = 16
 
   var body: some View {
-    HStack{
+    HStack {
       VStack(alignment: .leading) {
         HStack(spacing: 2) {
           Image(.githubMark)
@@ -42,6 +42,7 @@ struct RepoDetailView: View {
       Spacer()
     }
     .padding(8)
+    .navigationTitle("Repository Detail")
   }
 }
 
