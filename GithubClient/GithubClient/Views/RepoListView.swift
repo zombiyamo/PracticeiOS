@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct RepoListView: View {
-  @State private var mockRepos: [Repo] = []
+  @State var store = ReposStore()
 
   var body: some View {
     NavigationStack {
-      if mockRepos.isEmpty {
+      if store.repos.isEmpty {
         ProgressView("Loading...")
       } else {
-        List(mockRepos) { repo in
+        List(store.repos) { repo in
           NavigationLink(value: repo) {
             RepoRow(repo: repo)
           }
@@ -26,16 +26,21 @@ struct RepoListView: View {
         }
       }
     }
-    .onAppear {
-      loadRepos()
+    .task {
+      await store.loadRepos()
     }
   }
+}
 
-  private func loadRepos() {
-    // 1秒後にモックデータを読み込む
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-      mockRepos = [.mock1, .mock2, .mock3, .mock4, .mock5]
-    }
+@Observable  // インスタンス内部の変更を監視
+@MainActor  // クラス内の処理がメインスレッド上で実行されることが保証される
+class ReposStore {
+  private(set) var repos = [Repo]()
+
+  func loadRepos() async {
+    try! await Task.sleep(nanoseconds: 1_000_000_000)  // 1秒待つ
+
+    repos = [.mock1, .mock2, .mock3, .mock4, .mock5]
   }
 }
 
