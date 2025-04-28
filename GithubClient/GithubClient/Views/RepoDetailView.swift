@@ -35,6 +35,11 @@ struct RepoDetailView: View {
                 .frame(height: imageHeight)
             @unknown default:
               EmptyView()
+                .onAppear {
+                  print(
+                    "[⚠️ Warning] [RepoDetailView] Unexpected AsyncImage.Phase received: \(phase)"
+                  )
+                }
             }
           }
           Text(repo.owner.name)
