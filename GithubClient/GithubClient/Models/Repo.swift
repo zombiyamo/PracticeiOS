@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Repo: Identifiable, Hashable {
+struct Repo: Identifiable, Hashable, Decodable {
   var id: Int  //idの型はHashableに準拠していればなんでも良い
   var name: String
   var owner: User

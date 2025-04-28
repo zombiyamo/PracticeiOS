@@ -17,10 +17,26 @@ struct RepoDetailView: View {
     HStack {
       VStack(alignment: .leading) {
         HStack(spacing: 2) {
-          Image(.githubMark)
-            .resizable()
-            .scaledToFit()
-            .frame(height: imageHeight)
+          // ここでrepo.owner.imageURLを表示する
+          AsyncImage(url: repo.owner.imageURL) { phase in
+            switch phase {
+            case .empty:
+              ProgressView()
+                .frame(height: imageHeight)
+            case .success(let image):
+              image
+                .resizable()
+                .scaledToFit()
+                .frame(height: imageHeight)
+            case .failure:
+              Image(systemName: "person.crop.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(height: imageHeight)
+            @unknown default:
+              EmptyView()
+            }
+          }
           Text(repo.owner.name)
             .font(.caption)
         }

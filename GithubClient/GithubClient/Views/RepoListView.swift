@@ -36,11 +36,28 @@ struct RepoListView: View {
 @MainActor  // クラス内の処理がメインスレッド上で実行されることが保証される
 class ReposStore {
   private(set) var repos = [Repo]()
+  let url = URL(string: "https://api.github.com/orgs/mixigroup/repos")!
 
   func loadRepos() async {
-    try! await Task.sleep(nanoseconds: 1_000_000_000)  // 1秒待つ
+    var urlRequest = URLRequest(url: url)
+    urlRequest.httpMethod = "GET"
+    urlRequest.allHTTPHeaderFields = [
+      "Accept": "application/vnd.github.v3+json"
+    ]
+    // Github API のリクエスト制限(60回/h)回避のためのキャッシュ設定
+    urlRequest.cachePolicy = .returnCacheDataElseLoad
 
-    repos = [.mock1, .mock2, .mock3, .mock4, .mock5]
+    do {
+      let (data, _) = try! await URLSession.shared.data(for: urlRequest)
+
+      // デコード処理
+      let jsonDecoder = JSONDecoder()
+      jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+      repos = try jsonDecoder.decode([Repo].self, from: data)
+
+    } catch {
+      print("Failed to load repos: \(error)")
+    }
   }
 }
 
