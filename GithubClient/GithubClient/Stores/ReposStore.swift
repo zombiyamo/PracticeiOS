@@ -15,10 +15,17 @@ class ReposStore {
   }
 
   private(set) var state: Stateful<[Repo]> = .loading
+  
+  private let apiClient: any RepositoryHandling
+
+  init(apiClient: any RepositoryHandling = RepoAPIClient()) {
+    self.apiClient = apiClient
+  }
+  
   func loadRepos() async {
     state = .loading
     do {
-      let repos = try await RepoAPIClient().getRepos()
+      let repos = try await apiClient.getRepos()
       state = .loaded(repos)
     } catch {
       print("Failed to load repos: \(error)")

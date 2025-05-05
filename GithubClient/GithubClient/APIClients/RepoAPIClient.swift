@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct RepoAPIClient {
+protocol RepositoryHandling: Sendable {
+  func getRepos() async throws -> [Repo]
+}
+
+struct RepoAPIClient: RepositoryHandling {
   let url = URL(string: "https://api.github.com/orgs/mixigroup/repos")!
   func getRepos() async throws -> [Repo] {
     var urlRequest = URLRequest(url: url)
