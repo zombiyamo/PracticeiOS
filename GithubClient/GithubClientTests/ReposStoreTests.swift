@@ -30,7 +30,6 @@ struct ReposStoreTests {
 
   @MainActor
   @Test func onAppear_異常系() async {
-    struct DummyError: Error {}
     let dummyError = DummyError()
 
     let store = ReposStore(
@@ -46,14 +45,6 @@ struct ReposStoreTests {
       #expect(error is DummyError)
     default:
       Issue.record("state should be `.failed`")
-    }
-  }
-
-  struct MockRepoAPIClient: RepositoryHandling {
-    var getRepos: @Sendable () async throws -> [Repo]
-
-    func getRepos() async throws -> [Repo] {
-      try await getRepos()
     }
   }
 }

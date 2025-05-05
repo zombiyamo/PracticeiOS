@@ -11,7 +11,9 @@ import SwiftUI
 struct GithubClientApp: App {
   var body: some Scene {
     WindowGroup {
-      RepoListView()
+      RepoListView(
+        store: ReposStore(apiClient: RepoAPIClient())
+      )
     }
   }
 }

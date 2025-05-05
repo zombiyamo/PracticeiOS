@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RepoListView: View {
-  @State var store = ReposStore()
+  @State var store: ReposStore
 
   var body: some View {
     NavigationStack {
@@ -51,6 +51,38 @@ struct RepoListView: View {
   }
 }
 
-#Preview {
-  RepoListView()
+#Preview("正常系") {
+  RepoListView(
+    store: ReposStore(
+      apiClient: MockRepoAPIClient(
+        getRepos: {
+          [.mock1, .mock2, .mock3, .mock4, .mock5]
+        }
+      )
+    )
+  )
+}
+
+#Preview("読込中") {
+  RepoListView(
+    store: ReposStore(
+      apiClient: MockRepoAPIClient(
+        getRepos: {
+          try await Task.never()
+        }
+      )
+    )
+  )
+}
+
+#Preview("エラー") {
+  RepoListView(
+    store: ReposStore(
+      apiClient: MockRepoAPIClient(
+        getRepos: {
+          throw DummyError()
+        }
+      )
+    )
+  )
 }
